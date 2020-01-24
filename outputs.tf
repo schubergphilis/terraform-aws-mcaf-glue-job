@@ -1,9 +1,9 @@
 output "arn" {
   value       = aws_glue_job.default.arn
-  description = "ARN of the glue job"
+  description = "ARN of the Glue job"
 }
 
 output "id" {
   value       = aws_glue_job.default.id
-  description = "The glue job name"
+  description = "The Glue job name"
 }
