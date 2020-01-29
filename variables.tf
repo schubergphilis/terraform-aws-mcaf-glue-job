@@ -74,12 +74,6 @@ variable "script_location" {
   description = "Specifies the S3 path to the script that is executed by this job"
 }
 
-variable "type" {
-  type        = string
-  default     = "SCHEDULED"
-  description = "The type ('CONDITIONAL' or 'ON_DEMAND' or 'SCHEDULED') of the trigger"
-}
-
 variable "tags" {
   type        = map(string)
   description = "A mapping of tags to assign to all resources"
