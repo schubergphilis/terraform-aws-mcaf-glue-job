@@ -27,15 +27,16 @@ variable "default_arguments" {
   description = "A map with default arguments for this job"
 }
 
+variable "glue_version" {
+  type        = string
+  default     = "1.0"
+  description = "The Glue version to use"
+}
+
 variable "max_capacity" {
   type        = number
   default     = 10
   description = "The maximum number of data processing units that can be allocated"
-
-  validation {
-    condition     = (var.command_name == "glueetl" && (var.max_capacity > 2 && var.max_capacity < 100)) || (var.command_name == "pythonshell" && (var.max_capacity == 0.0625 || var.max_capacity == 1))
-    error_message = "When 'command_name' is 'glueetl' you can allocate from 2 to 100 DPUs. When 'command_name' is 'pythonshell' you can allocate either 0.0625 or 1 DPU"
-  }
 }
 
 variable "max_retries" {
@@ -48,22 +49,12 @@ variable "policy" {
   type        = string
   default     = null
   description = "A valid Glue policy JSON document"
-
-  validation {
-    condition     = var.role_arn == null
-    error_message = "Policy is required if you don't specify a 'role_arn'"
-  }
 }
 
 variable "python_version" {
   type        = string
   default     = "3"
   description = "The Python version (2 or 3) being used to execute a Python shell job"
-
-  validation {
-    condition     = var.python_version == "2" || var.python_version == "3"
-    error_message = "The 'python_version' value must be 2 or 3"
-  }
 }
 
 variable "role_arn" {
@@ -74,6 +65,7 @@ variable "role_arn" {
 
 variable "schedule" {
   type        = string
+  default     = null
   description = "A cron expression used to specify the schedule for the glue job"
 }
 
@@ -86,17 +78,6 @@ variable "type" {
   type        = string
   default     = "SCHEDULED"
   description = "The type ('CONDITIONAL' or 'ON_DEMAND' or 'SCHEDULED') of the trigger"
-
-  validation {
-    condition     = var.type == "SCHEDULED" && var.schedule == ""
-    error_message = "When 'type' is 'SCHEDULED' a cron expression should be specified"
-  }
-}
-
-variable "version" {
-  type        = string
-  default     = "1.0"
-  description = "The Glue version to use"
 }
 
 variable "tags" {

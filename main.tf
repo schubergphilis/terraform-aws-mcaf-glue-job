@@ -27,7 +27,6 @@ resource "aws_iam_role_policy" "default" {
 }
 
 resource "aws_iam_role_policy_attachment" "default" {
-  provider   = aws.glue
   count      = var.role_arn == null ? 1 : 0
   role       = aws_iam_role.default[0].id
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSGlueServiceRole"
