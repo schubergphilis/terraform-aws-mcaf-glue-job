@@ -3,16 +3,15 @@ variable "name" {
   description = "The name of the Glue job"
 }
 
-variable "active" {
-  type        = bool
-  default     = true
-  description = "Whether the glue job should be active"
-}
-
 variable "command_name" {
   type        = string
   default     = "glueetl"
   description = "The name of the job command. Defaults to glueetl"
+
+  validation {
+    condition     = var.command_name == "glueetl" || var.command_name == "pythonshell" || var.command_name == "gluestreaming"
+    error_message = "For an Apache Spark ETL job, this must be glueetl. For a Python shell job, it must be pythonshell. For an Apache Spark streaming ETL job, this must be gluestreaming."
+  }
 }
 
 variable "connections" {
@@ -29,32 +28,44 @@ variable "default_arguments" {
 
 variable "glue_version" {
   type        = string
-  default     = "1.0"
+  default     = "4.0"
   description = "The Glue version to use"
+}
+
+variable "kms_key_id" {
+  type        = string
+  default     = null
+  description = "The kms key id of the AWS KMS Customer Managed Key to be used to encrypt the log data"
+}
+
+variable "log_retention_days" {
+  type        = number
+  description = "The cloudwatch log group retention in days"
+  default     = 365
 }
 
 variable "max_capacity" {
   type        = number
-  default     = 10
+  default     = null
   description = "The maximum number of data processing units that can be allocated"
 }
 
 variable "max_retries" {
   type        = number
-  default     = 0
+  default     = null
   description = "The maximum number of times to retry a failing job"
 }
 
-variable "policy" {
+variable "number_of_workers" {
   type        = string
   default     = null
-  description = "A valid Glue policy JSON document"
+  description = "The number of workers that are allocated when the job runs"
 }
 
 variable "python_version" {
   type        = string
-  default     = "3"
-  description = "The Python version (2 or 3) being used to execute a Python shell job"
+  default     = "3.9"
+  description = "The Python version (2, 3 or 3.9) being used to execute a Python shell job"
 }
 
 variable "role_arn" {
@@ -63,10 +74,28 @@ variable "role_arn" {
   description = "An optional Glue execution role"
 }
 
+variable "role_policy" {
+  type        = string
+  default     = null
+  description = "A valid Glue IAM policy JSON document"
+}
+
 variable "schedule" {
   type        = string
   default     = null
   description = "A cron expression used to specify the schedule for the glue job"
+}
+
+variable "security_configuration" {
+  type        = string
+  default     = null
+  description = "The name of the Security Configuration to be associated with the job"
+}
+
+variable "schedule_active" {
+  type        = bool
+  default     = true
+  description = "Whether the glue trigger should be active"
 }
 
 variable "script_location" {
@@ -74,10 +103,21 @@ variable "script_location" {
   description = "Specifies the S3 path to the script that is executed by this job"
 }
 
-variable "type" {
+variable "trigger_type" {
   type        = string
-  default     = "SCHEDULED"
-  description = "The type ('CONDITIONAL' or 'ON_DEMAND' or 'SCHEDULED') of the trigger"
+  default     = null
+  description = "The type ('ON_DEMAND' or 'SCHEDULED') of the trigger"
+
+  validation {
+    condition     = var.trigger_type == null || var.trigger_type == "ON_DEMAND" || var.trigger_type == "SCHEDULED"
+    error_message = "Valid values are ON_DEMAND, or SCHEDULED."
+  }
+}
+
+variable "worker_type" {
+  type        = string
+  default     = null
+  description = "The type ('Standard' or 'G.1X' or 'G.2X') of predefined worker that is allocated when the job runs"
 }
 
 variable "tags" {
