@@ -29,7 +29,6 @@ A Terraform module that creates a Glue job.
 | [aws_cloudwatch_log_group.default](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_log_group) | resource |
 | [aws_glue_job.default](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/glue_job) | resource |
 | [aws_glue_trigger.default](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/glue_trigger) | resource |
-| [aws_iam_role_policy_attachment.job_execution_role](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
 
 ## Inputs
 
