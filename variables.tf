@@ -103,6 +103,12 @@ variable "script_location" {
   description = "Specifies the S3 path to the script that is executed by this job"
 }
 
+variable "timeout" {
+  type        = number
+  default     = 2880
+  description = "The job timeout in minutes"
+}
+
 variable "trigger_type" {
   type        = string
   default     = null
