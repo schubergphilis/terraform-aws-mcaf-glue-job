@@ -7,6 +7,7 @@ resource "aws_glue_job" "default" {
   number_of_workers      = var.number_of_workers
   role_arn               = var.role_arn != null ? var.role_arn : module.job_execution_role[0].arn
   security_configuration = var.security_configuration
+  timeout                = var.timeout
   worker_type            = var.worker_type
   tags                   = var.tags
 
