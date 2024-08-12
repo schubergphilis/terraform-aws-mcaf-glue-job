@@ -52,6 +52,7 @@ A Terraform module that creates a Glue job.
 | <a name="input_schedule"></a> [schedule](#input\_schedule) | A cron expression used to specify the schedule for the glue job | `string` | `null` | no |
 | <a name="input_schedule_active"></a> [schedule\_active](#input\_schedule\_active) | Whether the glue trigger should be active | `bool` | `true` | no |
 | <a name="input_security_configuration"></a> [security\_configuration](#input\_security\_configuration) | The name of the Security Configuration to be associated with the job | `string` | `null` | no |
+| <a name="input_timeout"></a> [timeout](#input\_timeout) | The job timeout in minutes | `number` | `2880` | no |
 | <a name="input_trigger_type"></a> [trigger\_type](#input\_trigger\_type) | The type ('ON\_DEMAND' or 'SCHEDULED') of the trigger | `string` | `null` | no |
 | <a name="input_worker_type"></a> [worker\_type](#input\_worker\_type) | The type ('Standard' or 'G.1X' or 'G.2X') of predefined worker that is allocated when the job runs | `string` | `null` | no |
 
