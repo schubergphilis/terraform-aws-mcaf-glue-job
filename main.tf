@@ -1,3 +1,7 @@
+locals {
+  create_log_group = var.security_configuration == null && var.continuous_logging.enabled && var.continuous_logging.log_group_name == null
+}
+
 resource "aws_glue_job" "default" {
   name                   = var.name
   connections            = var.connections
@@ -17,10 +21,12 @@ resource "aws_glue_job" "default" {
     script_location = var.script_location
   }
 
-  default_arguments = merge({
-    "--continuous-log-logGroup" : aws_cloudwatch_log_group.default.name,
-    "--enable-continuous-cloudwatch-log" : "true",
-  }, var.default_arguments)
+  default_arguments = merge(var.default_arguments, {
+    "--enable-continuous-cloudwatch-log" : var.continuous_logging.enabled,
+    }, var.continuous_logging.enabled ? {
+    "--continuous-log-logGroup" : var.continuous_logging.log_group_name != null ? var.continuous_logging.log_group_name : aws_cloudwatch_log_group.default[0].name,
+    } : {}
+  )
 }
 
 resource "aws_glue_trigger" "default" {

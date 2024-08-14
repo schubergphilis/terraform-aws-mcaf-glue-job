@@ -20,6 +20,18 @@ variable "connections" {
   description = "A list with connections for this job"
 }
 
+variable "continuous_logging" {
+  type = object({
+    enabled        = optional(bool, true)
+    log_group_name = optional(string, null)
+  })
+  default = {
+    enabled        = true
+    log_group_name = null
+  }
+  description = "Whether to enable continuous logging for this job"
+}
+
 variable "default_arguments" {
   type        = map(string)
   default     = {}
