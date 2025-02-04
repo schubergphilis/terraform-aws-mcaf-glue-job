@@ -21,10 +21,13 @@ resource "aws_glue_job" "default" {
     script_location = var.script_location
   }
 
-  default_arguments = merge(var.default_arguments, {
-    "--enable-continuous-cloudwatch-log" : var.continuous_logging.enabled,
-    }, var.continuous_logging.enabled ? {
-    "--continuous-log-logGroup" : var.continuous_logging.log_group_name != null ? var.continuous_logging.log_group_name : aws_cloudwatch_log_group.default[0].name,
+  default_arguments = merge(var.default_arguments,
+    {
+      "--enable-continuous-cloudwatch-log" : var.continuous_logging.enabled,
+    },
+    var.continuous_logging.enabled && var.security_configuration == null ?
+    {
+      "--continuous-log-logGroup" : var.continuous_logging.log_group_name != null ? var.continuous_logging.log_group_name : aws_cloudwatch_log_group.default[0].name,
     } : {}
   )
 }

@@ -76,7 +76,7 @@ variable "number_of_workers" {
 
 variable "python_version" {
   type        = string
-  default     = "3.9"
+  default     = "3"
   description = "The Python version (2, 3 or 3.9) being used to execute a Python shell job"
 }
 
