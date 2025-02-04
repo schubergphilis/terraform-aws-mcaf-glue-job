@@ -39,7 +39,7 @@ A Terraform module that creates a Glue job.
 | <a name="input_tags"></a> [tags](#input\_tags) | A mapping of tags to assign to all resources | `map(string)` | n/a | yes |
 | <a name="input_command_name"></a> [command\_name](#input\_command\_name) | The name of the job command. Defaults to glueetl | `string` | `"glueetl"` | no |
 | <a name="input_connections"></a> [connections](#input\_connections) | A list with connections for this job | `list(string)` | `[]` | no |
-| <a name="input_continuous_logging"></a> [continuous\_logging](#input\_continuous\_logging) | Whether to enable continuous logging for this job | <pre>object({<br>    enabled        = optional(bool, true)<br>    log_group_name = optional(string, null)<br>  })</pre> | <pre>{<br>  "enabled": true,<br>  "log_group_name": null<br>}</pre> | no |
+| <a name="input_continuous_logging"></a> [continuous\_logging](#input\_continuous\_logging) | Whether to enable continuous logging for this job | <pre>object({<br/>    enabled        = optional(bool, true)<br/>    log_group_name = optional(string, null)<br/>  })</pre> | <pre>{<br/>  "enabled": true,<br/>  "log_group_name": null<br/>}</pre> | no |
 | <a name="input_default_arguments"></a> [default\_arguments](#input\_default\_arguments) | A map with default arguments for this job | `map(string)` | `{}` | no |
 | <a name="input_glue_version"></a> [glue\_version](#input\_glue\_version) | The Glue version to use | `string` | `"4.0"` | no |
 | <a name="input_kms_key_id"></a> [kms\_key\_id](#input\_kms\_key\_id) | The kms key id of the AWS KMS Customer Managed Key to be used to encrypt the log data | `string` | `null` | no |
@@ -47,7 +47,7 @@ A Terraform module that creates a Glue job.
 | <a name="input_max_capacity"></a> [max\_capacity](#input\_max\_capacity) | The maximum number of data processing units that can be allocated | `number` | `null` | no |
 | <a name="input_max_retries"></a> [max\_retries](#input\_max\_retries) | The maximum number of times to retry a failing job | `number` | `null` | no |
 | <a name="input_number_of_workers"></a> [number\_of\_workers](#input\_number\_of\_workers) | The number of workers that are allocated when the job runs | `string` | `null` | no |
-| <a name="input_python_version"></a> [python\_version](#input\_python\_version) | The Python version (2, 3 or 3.9) being used to execute a Python shell job | `string` | `"3.9"` | no |
+| <a name="input_python_version"></a> [python\_version](#input\_python\_version) | The Python version (2, 3 or 3.9) being used to execute a Python shell job | `string` | `"3"` | no |
 | <a name="input_role_arn"></a> [role\_arn](#input\_role\_arn) | An optional Glue execution role | `string` | `null` | no |
 | <a name="input_role_policy"></a> [role\_policy](#input\_role\_policy) | A valid Glue IAM policy JSON document | `string` | `null` | no |
 | <a name="input_schedule"></a> [schedule](#input\_schedule) | A cron expression used to specify the schedule for the glue job | `string` | `null` | no |
