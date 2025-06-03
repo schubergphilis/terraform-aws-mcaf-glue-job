@@ -9,7 +9,7 @@ resource "aws_glue_job" "default" {
   max_capacity           = var.max_capacity
   max_retries            = var.max_retries
   number_of_workers      = var.number_of_workers
-  role_arn               = var.role_arn != null ? var.role_arn : module.job_execution_role[0].arn
+  role_arn               = var.execution_role_custom != null ? var.execution_role_custom.arn : module.job_execution_role[0].arn
   security_configuration = var.security_configuration
   timeout                = var.timeout
   worker_type            = var.worker_type
@@ -33,7 +33,8 @@ resource "aws_glue_job" "default" {
 }
 
 resource "aws_glue_trigger" "default" {
-  count    = var.trigger_type != null ? 1 : 0
+  count = var.trigger_type != null ? 1 : 0
+
   name     = var.name
   enabled  = var.schedule_active
   schedule = var.schedule

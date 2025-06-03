@@ -38,6 +38,29 @@ variable "default_arguments" {
   description = "A map with default arguments for this job"
 }
 
+variable "execution_role" {
+  type = object({
+    additional_policy_arns = optional(set(string), [])
+    create_policy          = optional(bool)
+    policy                 = optional(string)
+  })
+  default     = {}
+  description = "Configuration for Glue execution IAM role"
+}
+
+variable "execution_role_custom" {
+  type = object({
+    arn = string
+  })
+  default     = null
+  description = "Optional existing IAM role for Glue execution. Overrides the role configured in the execution_role variable."
+
+  validation {
+    condition     = var.execution_role_custom == null || can(regex("^arn:aws:iam::[0-9]{12}:(role)/.+$", var.execution_role_custom.arn))
+    error_message = "If provided, \"arn\" must match an AWS Principal ARN"
+  }
+}
+
 variable "glue_version" {
   type        = string
   default     = "4.0"
@@ -78,18 +101,6 @@ variable "python_version" {
   type        = string
   default     = "3"
   description = "The Python version (2, 3 or 3.9) being used to execute a Python shell job"
-}
-
-variable "role_arn" {
-  type        = string
-  default     = null
-  description = "An optional Glue execution role"
-}
-
-variable "role_policy" {
-  type        = string
-  default     = null
-  description = "A valid Glue IAM policy JSON document"
 }
 
 variable "schedule" {

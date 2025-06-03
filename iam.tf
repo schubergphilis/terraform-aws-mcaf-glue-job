@@ -1,11 +1,17 @@
 module "job_execution_role" {
-  count                 = var.role_arn == null ? 1 : 0
-  source                = "github.com/schubergphilis/terraform-aws-mcaf-role?ref=v0.4.0"
+  count = var.execution_role_custom == null ? 1 : 0
+
+  source  = "schubergphilis/mcaf-role/aws"
+  version = "~> 0.5.3"
+
   name                  = "GlueExecution-${var.name}"
-  create_policy         = var.role_policy != null ? true : false
-  policy_arns           = ["arn:aws:iam::aws:policy/service-role/AWSGlueServiceRole"]
-  principal_type        = "Service"
+  create_policy         = var.execution_role.create_policy
   principal_identifiers = ["glue.amazonaws.com"]
-  role_policy           = var.role_policy
+  principal_type        = "Service"
+  role_policy           = var.execution_role.policy
   tags                  = var.tags
+
+  policy_arns = setunion(compact([
+    "arn:aws:iam::aws:policy/service-role/AWSGlueServiceRole",
+  ]), var.execution_role.additional_policy_arns)
 }

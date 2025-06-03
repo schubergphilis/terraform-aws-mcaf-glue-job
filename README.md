@@ -20,7 +20,7 @@ A Terraform module that creates a Glue job.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_job_execution_role"></a> [job\_execution\_role](#module\_job\_execution\_role) | github.com/schubergphilis/terraform-aws-mcaf-role | v0.4.0 |
+| <a name="module_job_execution_role"></a> [job\_execution\_role](#module\_job\_execution\_role) | schubergphilis/mcaf-role/aws | ~> 0.5.3 |
 
 ## Resources
 
@@ -41,6 +41,8 @@ A Terraform module that creates a Glue job.
 | <a name="input_connections"></a> [connections](#input\_connections) | A list with connections for this job | `list(string)` | `[]` | no |
 | <a name="input_continuous_logging"></a> [continuous\_logging](#input\_continuous\_logging) | Whether to enable continuous logging for this job | <pre>object({<br/>    enabled        = optional(bool, true)<br/>    log_group_name = optional(string, null)<br/>  })</pre> | <pre>{<br/>  "enabled": true,<br/>  "log_group_name": null<br/>}</pre> | no |
 | <a name="input_default_arguments"></a> [default\_arguments](#input\_default\_arguments) | A map with default arguments for this job | `map(string)` | `{}` | no |
+| <a name="input_execution_role"></a> [execution\_role](#input\_execution\_role) | Configuration for Glue execution IAM role | <pre>object({<br/>    additional_policy_arns = optional(set(string), [])<br/>    create_policy          = optional(bool)<br/>    policy                 = optional(string)<br/>  })</pre> | `{}` | no |
+| <a name="input_execution_role_custom"></a> [execution\_role\_custom](#input\_execution\_role\_custom) | Optional existing IAM role for Glue execution. Overrides the role configured in the execution\_role variable. | <pre>object({<br/>    arn = string<br/>  })</pre> | `null` | no |
 | <a name="input_glue_version"></a> [glue\_version](#input\_glue\_version) | The Glue version to use | `string` | `"4.0"` | no |
 | <a name="input_kms_key_id"></a> [kms\_key\_id](#input\_kms\_key\_id) | The kms key id of the AWS KMS Customer Managed Key to be used to encrypt the log data | `string` | `null` | no |
 | <a name="input_log_retention_days"></a> [log\_retention\_days](#input\_log\_retention\_days) | The cloudwatch log group retention in days | `number` | `365` | no |
@@ -48,8 +50,6 @@ A Terraform module that creates a Glue job.
 | <a name="input_max_retries"></a> [max\_retries](#input\_max\_retries) | The maximum number of times to retry a failing job | `number` | `null` | no |
 | <a name="input_number_of_workers"></a> [number\_of\_workers](#input\_number\_of\_workers) | The number of workers that are allocated when the job runs | `string` | `null` | no |
 | <a name="input_python_version"></a> [python\_version](#input\_python\_version) | The Python version (2, 3 or 3.9) being used to execute a Python shell job | `string` | `"3"` | no |
-| <a name="input_role_arn"></a> [role\_arn](#input\_role\_arn) | An optional Glue execution role | `string` | `null` | no |
-| <a name="input_role_policy"></a> [role\_policy](#input\_role\_policy) | A valid Glue IAM policy JSON document | `string` | `null` | no |
 | <a name="input_schedule"></a> [schedule](#input\_schedule) | A cron expression used to specify the schedule for the glue job | `string` | `null` | no |
 | <a name="input_schedule_active"></a> [schedule\_active](#input\_schedule\_active) | Whether the glue trigger should be active | `bool` | `true` | no |
 | <a name="input_security_configuration"></a> [security\_configuration](#input\_security\_configuration) | The name of the Security Configuration to be associated with the job | `string` | `null` | no |
