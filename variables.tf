@@ -70,7 +70,7 @@ variable "glue_version" {
 variable "kms_key_id" {
   type        = string
   default     = null
-  description = "The kms key id of the AWS KMS Customer Managed Key to be used to encrypt the log data"
+  description = "The ARN of the KMS Customer Managed Key to encrypt the CloudWatch log group(s)"
 }
 
 variable "log_retention_days" {
