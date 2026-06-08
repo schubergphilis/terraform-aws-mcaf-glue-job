@@ -27,7 +27,7 @@ data "aws_iam_policy_document" "associate_kms_key" {
 
   statement {
     actions   = ["logs:AssociateKmsKey"]
-    resources = ["arn:aws:logs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:log-group:/aws-glue/jobs/*"]
+    resources = ["arn:aws:logs:${data.aws_region.current.region}:${data.aws_caller_identity.current.account_id}:log-group:/aws-glue/jobs/*"]
   }
 }
 
