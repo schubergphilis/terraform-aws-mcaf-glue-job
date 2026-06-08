@@ -28,9 +28,13 @@ Any existing CloudWatch dashboards, metric filters, or log insights queries poin
 
 The new group names are exposed via the `log_group_error_name` and `log_group_output_name` outputs to make referencing them from other resources straightforward.
 
+Rolling back to `glue_version = "4.0"` reverses these changes: `aws_cloudwatch_log_group.error` and `aws_cloudwatch_log_group.output` are destroyed and `aws_cloudwatch_log_group.default` is re-created. CloudWatch deletes log data when a log group is destroyed, so export any logs you need to retain before rolling back.
+
 ### Security configuration and `logs:AssociateKmsKey`
 
 When `security_configuration` is set, the module now automatically grants `logs:AssociateKmsKey` on `/aws-glue/jobs/*` to the Glue execution role. This permission is required by AWS for all Glue versions when CloudWatch KMS encryption is enabled in the security configuration — without it, continuous logging is silently disabled. No action is required from callers — if you were previously granting this permission manually, it can be removed.
+
+When using `execution_role_custom` alongside `security_configuration`, you must grant `logs:AssociateKmsKey` on `arn:aws:logs:<region>:<account>:log-group:/aws-glue/jobs/*` to the role yourself — the module only adds this permission to the role it creates.
 
 ## Upgrading to v2.0.0
 
