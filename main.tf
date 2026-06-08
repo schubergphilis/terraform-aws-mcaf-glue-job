@@ -1,7 +1,7 @@
 locals {
   glue_major_version = tonumber(split(".", var.glue_version)[0])
   role_arn           = var.execution_role_custom != null ? var.execution_role_custom.arn : module.job_execution_role[0].arn
-  role_name          = element(split("/", local.role_arn), 1)
+  role_name          = element(split("/", local.role_arn), length(split("/", local.role_arn)) - 1)
   log_group_prefix   = coalesce(var.continuous_logging.log_group_name, "/aws-glue/jobs/${var.name}")
 
   # Glue 4.x: manage the log group when there is no security config, or when a KMS key is explicitly provided

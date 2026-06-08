@@ -8,7 +8,9 @@ This release adds full Glue 5.0 logging support including automatic CloudWatch l
 
 ### No action required for Glue 4.x callers
 
-If you are not changing `glue_version`, the module behaves identically to v2.x. No variable changes, no resource replacements.
+If you are not changing `glue_version`, no variable changes or resource replacements are needed. However, if you already have `security_configuration` set, you will see one new resource in your plan:
+
+* `aws_iam_role_policy.associate_kms_key` is **created** — this grants `logs:AssociateKmsKey` to the Glue execution role, which is required by AWS whenever CloudWatch KMS encryption is enabled in a security configuration (for all Glue versions). This is expected and safe. If you were previously granting this permission manually, it can be removed.
 
 ### Migrating from `glue_version = "4.0"` to `"5.0"`
 
@@ -28,7 +30,7 @@ The new group names are exposed via the `log_group_error_name` and `log_group_ou
 
 ### Security configuration and `logs:AssociateKmsKey`
 
-When `security_configuration` is set, the module now automatically grants `logs:AssociateKmsKey` on `/aws-glue/jobs/*` to the Glue execution role. This permission is required by Glue 5.0 on every job run start when CloudWatch KMS encryption is enabled in the security configuration. No action is required from callers — if you were previously granting this permission manually, it can be removed.
+When `security_configuration` is set, the module now automatically grants `logs:AssociateKmsKey` on `/aws-glue/jobs/*` to the Glue execution role. This permission is required by AWS for all Glue versions when CloudWatch KMS encryption is enabled in the security configuration — without it, continuous logging is silently disabled. No action is required from callers — if you were previously granting this permission manually, it can be removed.
 
 ## Upgrading to v2.0.0
 

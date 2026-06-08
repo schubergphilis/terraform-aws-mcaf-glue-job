@@ -6,6 +6,20 @@ data "aws_kms_key" "example" {
   key_id = "alias/example-key"
 }
 
+# The KMS key policy must grant the CloudWatch Logs service principal permission to use
+# the key, otherwise log group creation with kms_key_id set will fail. Add a statement
+# like the following to the key policy:
+#
+#   {
+#     "Sid": "Allow CloudWatch Logs to use the key",
+#     "Effect": "Allow",
+#     "Principal": { "Service": "logs.<region>.amazonaws.com" },
+#     "Action": ["kms:Encrypt*","kms:Decrypt*","kms:ReEncrypt*","kms:GenerateDataKey*","kms:Describe*"],
+#     "Resource": "*"
+#   }
+#
+# This is separate from the execution role's KMS permissions below, which cover S3 and job bookmark encryption.
+
 resource "aws_glue_security_configuration" "example" {
   name = "example-security-config"
 
@@ -89,3 +103,4 @@ data "aws_iam_policy_document" "glue_job_policy" {
     resources = [data.aws_kms_key.example.arn]
   }
 }
+
