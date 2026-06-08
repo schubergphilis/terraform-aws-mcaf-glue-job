@@ -8,6 +8,10 @@ locals {
   manage_log_group_v4 = var.security_configuration == null || var.kms_key_id != null
   create_log_group_v4 = local.glue_major_version < 5 && var.continuous_logging.enabled && local.manage_log_group_v4 && var.continuous_logging.log_group_name == null
 
+  # Glue 4.x log group name: with a security configuration AWS appends -<SecConfig> to the prefix when writing logs,
+  # so pre-create the group at the name Glue will actually use.
+  log_group_v4_name = var.security_configuration != null ? "${local.log_group_prefix}-${var.security_configuration}" : local.log_group_prefix
+
   # Glue 5.0+: always create separate error and output log groups so retention and KMS are Terraform-managed
   create_log_group_v5 = local.glue_major_version >= 5 && var.continuous_logging.enabled && var.continuous_logging.log_group_name == null
 
@@ -42,7 +46,7 @@ resource "aws_glue_job" "default" {
     # Glue 4.x: --continuous-log-logGroup points to the single managed log group
     var.continuous_logging.enabled && local.glue_major_version < 5 && local.manage_log_group_v4 ?
     {
-      "--continuous-log-logGroup" : var.continuous_logging.log_group_name != null ? var.continuous_logging.log_group_name : aws_cloudwatch_log_group.default[0].name,
+      "--continuous-log-logGroup" : var.continuous_logging.log_group_name != null ? var.continuous_logging.log_group_name : local.log_group_prefix,
     } : {},
     # Glue 5.0 with security config: log group names are fixed by AWS convention
     # (<SecConfig>-role/<Role>/error|output) so no argument is needed — Terraform

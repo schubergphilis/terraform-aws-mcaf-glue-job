@@ -1,7 +1,7 @@
 resource "aws_cloudwatch_log_group" "default" {
   count = local.create_log_group_v4 ? 1 : 0
 
-  name              = local.log_group_prefix
+  name              = local.log_group_v4_name
   kms_key_id        = var.kms_key_id
   retention_in_days = var.log_retention_days
   tags              = var.tags
