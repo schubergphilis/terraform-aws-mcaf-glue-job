@@ -7,14 +7,14 @@ A Terraform module that creates a Glue job.
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.3 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 4.0.0 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.6.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 6.40.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 4.0.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 6.40.0 |
 
 ## Modules
 
@@ -27,8 +27,14 @@ A Terraform module that creates a Glue job.
 | Name | Type |
 |------|------|
 | [aws_cloudwatch_log_group.default](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_log_group) | resource |
+| [aws_cloudwatch_log_group.error](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_log_group) | resource |
+| [aws_cloudwatch_log_group.output](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_log_group) | resource |
 | [aws_glue_job.default](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/glue_job) | resource |
 | [aws_glue_trigger.default](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/glue_trigger) | resource |
+| [aws_iam_role_policy.associate_kms_key](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy) | resource |
+| [aws_caller_identity.current](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/caller_identity) | data source |
+| [aws_iam_policy_document.associate_kms_key](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
+| [aws_region.current](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/region) | data source |
 
 ## Inputs
 
@@ -44,7 +50,7 @@ A Terraform module that creates a Glue job.
 | <a name="input_execution_role"></a> [execution\_role](#input\_execution\_role) | Configuration for Glue execution IAM role | <pre>object({<br/>    additional_policy_arns = optional(set(string), [])<br/>    create_policy          = optional(bool)<br/>    policy                 = optional(string)<br/>  })</pre> | `{}` | no |
 | <a name="input_execution_role_custom"></a> [execution\_role\_custom](#input\_execution\_role\_custom) | Optional existing IAM role for Glue execution. Overrides the role configured in the execution\_role variable. | <pre>object({<br/>    arn = string<br/>  })</pre> | `null` | no |
 | <a name="input_glue_version"></a> [glue\_version](#input\_glue\_version) | The Glue version to use | `string` | `"4.0"` | no |
-| <a name="input_kms_key_id"></a> [kms\_key\_id](#input\_kms\_key\_id) | The kms key id of the AWS KMS Customer Managed Key to be used to encrypt the log data | `string` | `null` | no |
+| <a name="input_kms_key_id"></a> [kms\_key\_id](#input\_kms\_key\_id) | The ARN of the KMS Customer Managed Key to encrypt the CloudWatch log group(s) | `string` | `null` | no |
 | <a name="input_log_retention_days"></a> [log\_retention\_days](#input\_log\_retention\_days) | The cloudwatch log group retention in days | `number` | `365` | no |
 | <a name="input_max_capacity"></a> [max\_capacity](#input\_max\_capacity) | The maximum number of data processing units that can be allocated | `number` | `null` | no |
 | <a name="input_max_retries"></a> [max\_retries](#input\_max\_retries) | The maximum number of times to retry a failing job | `number` | `null` | no |
@@ -63,4 +69,7 @@ A Terraform module that creates a Glue job.
 |------|-------------|
 | <a name="output_arn"></a> [arn](#output\_arn) | ARN of the Glue job |
 | <a name="output_id"></a> [id](#output\_id) | The Glue job name |
+| <a name="output_log_group_error_name"></a> [log\_group\_error\_name](#output\_log\_group\_error\_name) | Name of the CloudWatch error log group managed by the module (Glue 5.0+) |
+| <a name="output_log_group_name"></a> [log\_group\_name](#output\_log\_group\_name) | Name of the CloudWatch log group managed by the module (Glue 4.x only) |
+| <a name="output_log_group_output_name"></a> [log\_group\_output\_name](#output\_log\_group\_output\_name) | Name of the CloudWatch output log group managed by the module (Glue 5.0+) |
 <!-- END_TF_DOCS -->
