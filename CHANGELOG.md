@@ -1,5 +1,15 @@
 # Changelog
 
+## v3.0.0 - 2026-06-10
+
+### What's Changed
+
+#### 🚀 Features
+
+* feat(glue): add support for Glue 5.0 logging and security permissions (#9) @deni-hot
+
+**Full Changelog**: https://github.com/schubergphilis/terraform-aws-mcaf-glue-job/compare/v2.0.0...v3.0.0
+
 ## v2.0.0 - 2025-06-03
 
 ### What's Changed
