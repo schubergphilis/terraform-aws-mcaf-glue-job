@@ -85,6 +85,12 @@ variable "max_capacity" {
   description = "The maximum number of data processing units that can be allocated"
 }
 
+variable "max_concurrent_runs" {
+  type        = number
+  default     = 1
+  description = "The maximum number of concurrent runs allowed for the job"
+}
+
 variable "max_retries" {
   type        = number
   default     = null

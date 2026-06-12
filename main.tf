@@ -39,6 +39,10 @@ resource "aws_glue_job" "default" {
     script_location = var.script_location
   }
 
+  execution_property {
+    max_concurrent_runs = var.max_concurrent_runs
+  }
+
   default_arguments = merge(var.default_arguments,
     {
       "--enable-continuous-cloudwatch-log" : var.continuous_logging.enabled,
