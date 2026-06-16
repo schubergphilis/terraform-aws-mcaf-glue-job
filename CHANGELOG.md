@@ -1,5 +1,15 @@
 # Changelog
 
+## v3.1.0 - 2026-06-16
+
+### What's Changed
+
+#### 🚀 Features
+
+* enhancement(glue): add configurable max_concurrent_runs for glue job (#10) @Jarvin-M
+
+**Full Changelog**: https://github.com/schubergphilis/terraform-aws-mcaf-glue-job/compare/v3.0.0...v3.1.0
+
 ## v3.0.0 - 2026-06-10
 
 ### What's Changed
