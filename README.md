@@ -53,6 +53,7 @@ A Terraform module that creates a Glue job.
 | <a name="input_kms_key_id"></a> [kms\_key\_id](#input\_kms\_key\_id) | The ARN of the KMS Customer Managed Key to encrypt the CloudWatch log group(s) | `string` | `null` | no |
 | <a name="input_log_retention_days"></a> [log\_retention\_days](#input\_log\_retention\_days) | The cloudwatch log group retention in days | `number` | `365` | no |
 | <a name="input_max_capacity"></a> [max\_capacity](#input\_max\_capacity) | The maximum number of data processing units that can be allocated | `number` | `null` | no |
+| <a name="input_max_concurrent_runs"></a> [max\_concurrent\_runs](#input\_max\_concurrent\_runs) | The maximum number of concurrent runs allowed for the job | `number` | `1` | no |
 | <a name="input_max_retries"></a> [max\_retries](#input\_max\_retries) | The maximum number of times to retry a failing job | `number` | `null` | no |
 | <a name="input_number_of_workers"></a> [number\_of\_workers](#input\_number\_of\_workers) | The number of workers that are allocated when the job runs | `string` | `null` | no |
 | <a name="input_python_version"></a> [python\_version](#input\_python\_version) | The Python version (2, 3 or 3.9) being used to execute a Python shell job | `string` | `"3"` | no |
